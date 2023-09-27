@@ -34,10 +34,10 @@ workflow PREPARE_GENOME {
     * Uncompress genome fasta file if required
     */
     if (params.fasta.endsWith(".gz")) {
-        ch_fasta    = GUNZIP_FASTA ( [ [id:"target_fasta"], params.fasta ] ).gunzip
+        ch_fasta    = GUNZIP_FASTA ( [ [id:"fasta"], params.fasta ] ).gunzip
         ch_versions = ch_versions.mix(GUNZIP_FASTA.out.versions)
     } else {
-        ch_fasta = Channel.from( file(params.fasta) ).map { row -> [[id:"spikein_fasta"], row] }
+        ch_fasta = Channel.from( file(params.fasta) ).map { row -> [[id:"fasta"], row] }
     }
 
     /*
